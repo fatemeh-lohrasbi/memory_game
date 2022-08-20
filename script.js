@@ -51,17 +51,25 @@ const cards_array = [
 cards_array.sort(() => 0.5 - Math.random() );
 console.log(cards_array);
 
-const container = document.querySelector('#grid_container')
+const container = document.querySelector('#grid_container');
+const clicked_items_array = [];
 
 function create_board(){
     for (let i = 0; i < cards_array.length; i++) {
-        const cover_img = document.createElement('img');
-        cover_img.setAttribute('src', 'images/cover.png');
-        cover_img.setAttribute('date-id', i);
-        container.appendChild(cover_img);
+        const card = document.createElement('img');
+        card.setAttribute('src', 'images/cover.png');
+        card.setAttribute('data-id', i);
+        container.appendChild(card);
+        card.addEventListener('click', flip_card);
     }
 }
 
 create_board();
 
-
+function flip_card() {
+    const card_id = this.getAttribute('data-id');
+    const clicked_item_name = (cards_array[card_id].name);
+    clicked_items_array.push(clicked_item_name);
+    console.log(clicked_items_array);
+    this.setAttribute('src', cards_array[card_id].img);
+}

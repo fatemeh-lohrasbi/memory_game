@@ -5,6 +5,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: rgb(36, 33, 33);
 }
 
 #grid_container {
