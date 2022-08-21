@@ -16,6 +16,10 @@ body {
     justify-content: center;
 }
 
+img {
+    cursor: pointer;
+}
+
 @media screen and (max-width : 800px) {
     #grid_container {
         width: 95%;
