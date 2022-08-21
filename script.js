@@ -87,14 +87,10 @@ function check_match() {
         all_cards[all_clicked_cards_id[1]].setAttribute('src', 'images/cover.png');
 
     } else if (all_clicked_cards_name[0] == all_clicked_cards_name[1]) {
-
-        alert(`
-         u found a match 👏😍😍
-         keep playing to found them all 🙌`)
-
         all_cards[all_clicked_cards_id[0]].removeEventListener('click', flip_card);
         all_cards[all_clicked_cards_id[1]].removeEventListener('click', flip_card);
-        all_cards[all_clicked_cards_id[0]].style.cursor = 'none';
+        all_cards[all_clicked_cards_id[0]].style.cursor = 'not-allowed';
+        all_cards[all_clicked_cards_id[1]].style.cursor = 'not-allowed';
         cards_won.push(all_clicked_cards_name)
 
     } else {
@@ -105,7 +101,12 @@ function check_match() {
     all_clicked_cards_name = [];
     all_clicked_cards_id = [];
 
-    
+    if (cards_won.length == cards_array.length / 2) {
+        alert(`
+        cogratulation 😎👏🎉
+        you found them all
+        `)
+    }   
 
 }
 
