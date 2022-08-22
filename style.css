@@ -4,8 +4,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     height: 100vh;
     background-color: rgb(36, 33, 33);
+    color: aliceblue;
+    font-size: 2rem;
 }
 
 #grid_container {

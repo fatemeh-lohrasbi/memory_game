@@ -55,7 +55,6 @@ const container = document.querySelector('#grid_container');
 let all_clicked_cards_name = [];
 let all_clicked_cards_id = [];
 let cards_won = [];
-
 function create_board() {
     for (let i = 0; i < cards_array.length; i++) {
         const card = document.createElement('img');
@@ -75,8 +74,9 @@ function flip_card() {
     all_clicked_cards_id.push(card_id);
     this.setAttribute('src', cards_array[card_id].img);
     if (all_clicked_cards_name.length == 2) {
-        setTimeout(check_match, 200)
+        setTimeout(check_match, 300)
     }
+
 }
 
 function check_match() {
@@ -106,7 +106,20 @@ function check_match() {
         cogratulation 😎👏🎉
         you found them all
         `)
-    }   
+    }
 
 }
 
+//timer
+function timer() {
+    let time_left = 30;
+    const countdown_timer = setInterval(function () {
+        if (time_left <= 0) {
+            clearInterval(countdown_timer);
+            document.getElementById("count_down_container").innerHTML = "Finished";
+        } else {
+            document.getElementById("count_down_container").innerHTML = time_left + " seconds remaining";
+        } time_left -= 1;
+    }, 1000);
+}
+timer()
