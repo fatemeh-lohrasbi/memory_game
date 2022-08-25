@@ -52,74 +52,113 @@ const cards_array = [
 cards_array.sort(() => 0.5 - Math.random());
 
 const container = document.querySelector('#grid_container');
+const start_game_btn = document.getElementById('start_game');
+const reset_game_btn = document.getElementById('reset_game');
+const start_text = document.getElementById('start_text');
+const timer_container = document.getElementById('timer');
+let win_or_lost_msg = document.getElementById("win_or_lost_msg");
+
+
+let card;
+let all_cards;
 let all_clicked_cards_name = [];
 let all_clicked_cards_id = [];
 let cards_won = [];
-function create_board() {
-    for (let i = 0; i < cards_array.length; i++) {
-        const card = document.createElement('img');
-        card.setAttribute('src', 'images/cover.png');
-        card.setAttribute('data-id', i);
-        container.appendChild(card);
-        card.addEventListener('click', flip_card);
-    }
+
+
+
+function before_start() {
+    start_game_btn.addEventListener('click', start);
+    reset_game_btn.style.display = 'none';
 }
 
-create_board();
+before_start()
 
-function flip_card() {
-    const card_id = this.getAttribute('data-id');
-    const clicked_card_name = (cards_array[card_id].name);
-    all_clicked_cards_name.push(clicked_card_name);
-    all_clicked_cards_id.push(card_id);
-    this.setAttribute('src', cards_array[card_id].img);
-    if (all_clicked_cards_name.length == 2) {
-        setTimeout(check_match, 300)
-    }
 
-}
 
-function check_match() {
-    const all_cards = document.querySelectorAll('#grid_container img');
-    if (all_clicked_cards_id[0] == all_clicked_cards_id[1]) {
-        alert('you have clicked the same image')
-        all_cards[all_clicked_cards_id[0]].setAttribute('src', 'images/cover.png');
-        all_cards[all_clicked_cards_id[1]].setAttribute('src', 'images/cover.png');
+function start() {
+    start_game_btn.style.display = 'none';
+    start_text.style.display = 'none';
 
-    } else if (all_clicked_cards_name[0] == all_clicked_cards_name[1]) {
-        all_cards[all_clicked_cards_id[0]].removeEventListener('click', flip_card);
-        all_cards[all_clicked_cards_id[1]].removeEventListener('click', flip_card);
-        all_cards[all_clicked_cards_id[0]].style.cursor = 'not-allowed';
-        all_cards[all_clicked_cards_id[1]].style.cursor = 'not-allowed';
-        cards_won.push(all_clicked_cards_name)
 
-    } else {
-        all_cards[all_clicked_cards_id[0]].setAttribute('src', 'images/cover.png');
-        all_cards[all_clicked_cards_id[1]].setAttribute('src', 'images/cover.png');
-    }
 
-    all_clicked_cards_name = [];
-    all_clicked_cards_id = [];
+    function timer() {
+        let time_left = 35;
+        const countdown_timer = setInterval(function () {
+            timer_container.innerHTML = time_left + " seconds remaining";
 
-    if (cards_won.length == cards_array.length / 2) {
-        alert(`
-        cogratulation 😎👏🎉
-        you found them all
-        `)
-    }
+            //if player win
+            if (cards_won.length == cards_array.length / 2) {
+                win_or_lost_msg.innerHTML = "cogratulation, you found them all 😎👏🎉";
+                finish_timer();
+                //if player lost
+            } else if (time_left <= 0 && cards_won.length != cards_array.length / 2) {
+                win_or_lost_msg.innerHTML = "sorry, you lost 😥";
+                finish_timer();
+            }
 
-}
+            time_left--;
 
-//timer
-function timer() {
-    let time_left = 30;
-    const countdown_timer = setInterval(function () {
-        if (time_left <= 0) {
+        }, 1000);
+
+
+        function finish_timer() {
             clearInterval(countdown_timer);
-            document.getElementById("count_down_container").innerHTML = "Finished";
+            timer_container.style.display = 'none';
+            reset_game_btn.style.display = 'block';
+            reset_game_btn.addEventListener('click', reset);
+        }
+    }
+
+    timer()
+
+
+    function create_board() {
+        for (let i = 0; i < cards_array.length; i++) {
+            card = document.createElement('img');
+            card.setAttribute('src', 'images/cover.png');
+            card.setAttribute('data-id', i);
+            container.appendChild(card);
+            card.addEventListener('click', flip_card);
+        }
+    }
+    create_board();
+
+    function flip_card() {
+        const card_id = this.getAttribute('data-id');
+        const clicked_card_name = (cards_array[card_id].name);
+        all_clicked_cards_name.push(clicked_card_name);
+        all_clicked_cards_id.push(card_id);
+        this.setAttribute('src', cards_array[card_id].img);
+        if (all_clicked_cards_name.length == 2) {
+            setTimeout(check_match, 300)
+        }
+
+    }
+
+    function check_match() {
+        all_cards = document.querySelectorAll('#grid_container img');
+        if (all_clicked_cards_id[0] == all_clicked_cards_id[1]) {
+            alert('you have clicked the same image')
+            all_cards[all_clicked_cards_id[0]].setAttribute('src', 'images/cover.png');
+            all_cards[all_clicked_cards_id[1]].setAttribute('src', 'images/cover.png');
+
+        } else if (all_clicked_cards_name[0] == all_clicked_cards_name[1]) {
+            all_cards[all_clicked_cards_id[0]].removeEventListener('click', flip_card);
+            all_cards[all_clicked_cards_id[1]].removeEventListener('click', flip_card);
+            all_cards[all_clicked_cards_id[0]].style.cursor = 'not-allowed';
+            all_cards[all_clicked_cards_id[1]].style.cursor = 'not-allowed';
+            cards_won.push(all_clicked_cards_name)
+
         } else {
-            document.getElementById("count_down_container").innerHTML = time_left + " seconds remaining";
-        } time_left -= 1;
-    }, 1000);
+            all_cards[all_clicked_cards_id[0]].setAttribute('src', 'images/cover.png');
+            all_cards[all_clicked_cards_id[1]].setAttribute('src', 'images/cover.png');
+        }
+        all_clicked_cards_name = [];
+        all_clicked_cards_id = [];
+    }
+
 }
-timer()
+
+
+

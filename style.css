@@ -1,3 +1,7 @@
+@font-face {
+    font-family:Roboto-Light ;
+    src: url(font/Roboto-Light.ttf);
+}
 body {
     margin: 0;
     padding: 0;
@@ -6,10 +10,16 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100vh;
-    background-color: rgb(36, 33, 33);
+    background-color: rgb(25, 28, 33);
     color: aliceblue;
+    font-family: Roboto-Light;
     font-size: 2rem;
 }
+
+h2, .btn{
+    font-size: 2rem;
+}
+
 
 #grid_container {
     width: 45%;
@@ -18,9 +28,19 @@ body {
     flex-wrap: wrap;
     justify-content: center;
 }
-
-img {
+img{
     cursor: pointer;
+}
+.btn{
+    background: none;
+    outline: none;
+    cursor: pointer;
+    border: 1px solid #fff;
+    padding: .5rem 1rem;
+    margin-top: 1rem ;
+    color: rgb(92, 167, 172);
+    border-radius: 5px;
+    
 }
 
 @media screen and (max-width : 800px) {
