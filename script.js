@@ -57,10 +57,10 @@ const reset_game_btn = document.getElementById('reset_game');
 const start_text = document.getElementById('start_text');
 const timer_container = document.getElementById('timer');
 let win_or_lost_msg = document.getElementById("win_or_lost_msg");
+let all_cards = document.querySelectorAll('#grid_container img');
 
 
 let card=[];
-let all_cards=[];
 let all_clicked_cards_name = [];
 let all_clicked_cards_id = [];
 let cards_won = [];
@@ -88,11 +88,16 @@ function start() {
 			if (cards_won.length == cards_array.length / 2) {
 				win_or_lost_msg.innerHTML = "cogratulation, you found them all 😎👏🎉";
 				finish_timer();
+				all_cards.removeEventListener('click', flip_card); // doesn't work :(
+
 				//if player lost
 			} else if (time_left <= 0 && cards_won.length != cards_array.length / 2) {
 				win_or_lost_msg.innerHTML = "sorry, you lost 😥";
 				finish_timer();
-				all_cards.removeEventListener('click', flip_card);
+				all_cards.removeEventListener('click', flip_card); // doesn't work :(
+
+				all_cards[all_clicked_cards_id[0]].setAttribute('src', 'images/cover.png');
+				all_cards[all_clicked_cards_id[1]].setAttribute('src', 'images/cover.png');
 			}
 
 			time_left--;
@@ -134,11 +139,12 @@ function start() {
 	function check_match() {
 		all_cards = document.querySelectorAll('#grid_container img');
 		if (all_clicked_cards_id[0] == all_clicked_cards_id[1]) {
-			alert('you have clicked the same image')
+			// if you clicked the same card, change image to default cover
 			all_cards[all_clicked_cards_id[0]].setAttribute('src', 'images/cover.png');
 			all_cards[all_clicked_cards_id[1]].setAttribute('src', 'images/cover.png');
 
 		} else if (all_clicked_cards_name[0] == all_clicked_cards_name[1]) {
+			// if you found a match
 			all_cards[all_clicked_cards_id[0]].removeEventListener('click', flip_card);
 			all_cards[all_clicked_cards_id[1]].removeEventListener('click', flip_card);
 			all_cards[all_clicked_cards_id[0]].style.cursor = 'not-allowed';
@@ -152,22 +158,23 @@ function start() {
 		all_clicked_cards_name = [];
 		all_clicked_cards_id = [];
 	}
-
 	
 
 	function reset() {
-		timer_container.style.display = 'block';
-		timer_container.innerHTML = 35 + " seconds remaining";
-		timer();
-		// create_board();
-		// check_match();
-		reset_game_btn.style.display = 'none';
-		win_or_lost_msg.style.display = 'none';
-		all_clicked_cards_name = [];
-		all_clicked_cards_id = [];
-		cards_won = [];
-		all_cards=[];
-		card=[];
+		// timer_container.style.display = 'block';
+		// timer_container.innerHTML = 35 + " seconds remaining";
+		// timer();
+		// // create_board();
+		// // check_match();
+		// reset_game_btn.style.display = 'none';
+		// win_or_lost_msg.style.display = 'none';
+		// all_clicked_cards_name = [];
+		// all_clicked_cards_id = [];
+		// cards_won = [];
+		// all_cards=[];
+		// card=[];
+		location.reload();
+		
 	}
 }
 
