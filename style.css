@@ -20,7 +20,9 @@ h2, .btn{
     font-size: 2rem;
 }
 
-
+#start_game{
+    cursor: pointer;
+}
 #grid_container {
     width: 45%;
     height: auto;

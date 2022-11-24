@@ -48,7 +48,6 @@ const cards_array = [
 		img: 'images/shape12.png'
 	}
 ]
-
 cards_array.sort(() => 0.5 - Math.random());
 
 const container = document.querySelector('#grid_container');
@@ -60,61 +59,62 @@ let win_or_lost_msg = document.getElementById("win_or_lost_msg");
 let all_cards = document.querySelectorAll('#grid_container img');
 
 
-let card=[];
+let card = [];
 let all_clicked_cards_name = [];
 let all_clicked_cards_id = [];
 let cards_won = [];
+let time_left = 25;
+let playing = true;
+reset_game_btn.style.display = 'none';
 
 
-
-function before_start() {
-	start_game_btn.addEventListener('click', start);
-	reset_game_btn.style.display = 'none';
-}
-before_start()
-
-
-
-function start() {
+const start_game = function () {
 	start_game_btn.style.display = 'none';
 	start_text.style.display = 'none';
 
-	function timer() {
-		let time_left = 35;
-		const countdown_timer = setInterval(function () {
-			timer_container.innerHTML = time_left + " seconds remaining";
+	// timer
+	const count_down = function () {
+		time_left--;
+		timer_container.innerHTML = time_left + " seconds remaining";
 
-			//if player win
-			if (cards_won.length == cards_array.length / 2) {
-				win_or_lost_msg.innerHTML = "cogratulation, you found them all 😎👏🎉";
-				finish_timer();
-				all_cards.removeEventListener('click', flip_card); // doesn't work :(
-
-				//if player lost
-			} else if (time_left <= 0 && cards_won.length != cards_array.length / 2) {
-				win_or_lost_msg.innerHTML = "sorry, you lost 😥";
-				finish_timer();
-				all_cards.removeEventListener('click', flip_card); // doesn't work :(
-
-				all_cards[all_clicked_cards_id[0]].setAttribute('src', 'images/cover.png');
-				all_cards[all_clicked_cards_id[1]].setAttribute('src', 'images/cover.png');
-			}
-
-			time_left--;
-
-		}, 1000);
-
-		function finish_timer() {
-			clearInterval(countdown_timer);
-			timer_container.style.display = 'none';
-			reset_game_btn.style.display = 'block';
-			reset_game_btn.addEventListener('click', reset);
+		//if player win
+		if (cards_won.length == cards_array.length / 2) {
+			win_or_lost_msg.innerHTML = "cogratulation, you found them all 😎👏🎉";
+			finish_game();
+			//if player lost
+		} else if (time_left == 0 && cards_won.length != cards_array.length / 2) {
+			win_or_lost_msg.innerHTML = "sorry, you lost 😥";
+			finish_game();
+			all_cards[all_clicked_cards_id[0]].setAttribute('src', 'images/cover.png');
+			all_cards[all_clicked_cards_id[1]].setAttribute('src', 'images/cover.png');
 		}
+	};
+	const countdown_timer = setInterval(count_down, 1000)
 
+
+	const finish_game = function () {
+		clearInterval(countdown_timer);
+		timer_container.style.display = 'none';
+		reset_game_btn.style.display = 'block';
+		reset_game_btn.addEventListener('click', reset);
+		playing = false;
 	}
-	timer()
 
-	function create_board() {
+
+	const flip_card = function () {
+		if (playing) {
+			const card_id = this.getAttribute('data-id');
+			const clicked_card_name = (cards_array[card_id].name);
+			all_clicked_cards_name.push(clicked_card_name);
+			all_clicked_cards_id.push(card_id);
+			this.setAttribute('src', cards_array[card_id].img);
+			if (all_clicked_cards_name.length == 2) {
+				setTimeout(check_match, 300)
+			}
+		}
+	}
+
+	const create_board = function () {
 		for (let i = 0; i < cards_array.length; i++) {
 			card = document.createElement('img');
 			card.setAttribute('src', 'images/cover.png');
@@ -125,18 +125,9 @@ function start() {
 	}
 	create_board();
 
-	function flip_card() {
-		const card_id = this.getAttribute('data-id');
-		const clicked_card_name = (cards_array[card_id].name);
-		all_clicked_cards_name.push(clicked_card_name);
-		all_clicked_cards_id.push(card_id);
-		this.setAttribute('src', cards_array[card_id].img);
-		if (all_clicked_cards_name.length == 2) {
-			setTimeout(check_match, 300)
-		}
-	}
 
-	function check_match() {
+
+	const check_match = function() {
 		all_cards = document.querySelectorAll('#grid_container img');
 		if (all_clicked_cards_id[0] == all_clicked_cards_id[1]) {
 			// if you clicked the same card, change image to default cover
@@ -158,23 +149,11 @@ function start() {
 		all_clicked_cards_name = [];
 		all_clicked_cards_id = [];
 	}
-	
 
-	function reset() {
-		// timer_container.style.display = 'block';
-		// timer_container.innerHTML = 35 + " seconds remaining";
-		// timer();
-		// // create_board();
-		// // check_match();
-		// reset_game_btn.style.display = 'none';
-		// win_or_lost_msg.style.display = 'none';
-		// all_clicked_cards_name = [];
-		// all_clicked_cards_id = [];
-		// cards_won = [];
-		// all_cards=[];
-		// card=[];
+	const reset = function() {
 		location.reload();
-		
 	}
 }
 
+document.addEventListener('keydown', start_game);
+start_game_btn.addEventListener('click', start_game);
