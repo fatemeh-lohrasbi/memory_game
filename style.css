@@ -1,52 +1,94 @@
 @font-face {
-    font-family:Roboto-Light ;
-    src: url(font/Roboto-Light.ttf);
+  font-family: Roboto-Light;
+  src: url(font/Roboto-Light.ttf);
 }
 body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    background-color: rgb(25, 28, 33);
-    color: aliceblue;
-    font-family: Roboto-Light;
-    font-size: 2rem;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(25, 28, 33);
+  color: aliceblue;
+  font-family: Roboto-Light;
+  font-size: 2rem;
 }
 
-h2, .btn{
-    font-size: 2rem;
+h2,
+.btn {
+  font-size: 2rem;
 }
 
-#start_game{
-    cursor: pointer;
+#start_game {
+  cursor: pointer;
 }
 #grid_container {
-    width: 45%;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-img{
-    cursor: pointer;
+img {
+  cursor: pointer;
 }
-.btn{
-    background: none;
-    outline: none;
-    cursor: pointer;
-    border: 1px solid #fff;
-    padding: .5rem 1rem;
-    margin-top: 1rem ;
-    color: rgb(92, 167, 172);
-    border-radius: 5px;
-    
+.btn {
+  background: none;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid #fff;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  color: rgb(92, 167, 172);
+  border-radius: 5px;
 }
 
-@media screen and (max-width : 800px) {
-    #grid_container {
-        width: 95%;
-    }
+@media screen and (max-width: 600px) {
+  #grid_container {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 749px) {
+  #grid_container {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 749px) and (max-width: 857px) {
+  #grid_container {
+    width: 70%;
+  }
+}
+@media screen and (min-width: 857px) and (max-width: 999px) {
+  #grid_container {
+    width: 60%;
+  }
+}
+@media screen and (min-width: 999px) and (max-width: 1090px) {
+  #grid_container {
+    width: 55%;
+  }
+}
+
+@media screen and (min-width: 1090px) and (max-width: 1199px)  {
+  #grid_container {
+    width: 50%;
+  }
+}
+@media screen and (min-width: 1199px) and (max-width: 1333px) {
+  #grid_container {
+    width: 45%;
+  }
+}
+@media screen and (min-width: 1333px) and (max-width: 1499px) {
+  #grid_container {
+    width: 40%;
+  }
+}
+@media screen and (min-width: 1499px) {
+  #grid_container {
+    width: 30%;
+  }
 }

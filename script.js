@@ -141,7 +141,6 @@ const start_game = function () {
 			all_cards[all_clicked_cards_id[0]].style.cursor = 'not-allowed';
 			all_cards[all_clicked_cards_id[1]].style.cursor = 'not-allowed';
 			cards_won.push(all_clicked_cards_name)
-
 		} else {
 			all_cards[all_clicked_cards_id[0]].setAttribute('src', 'images/cover.png');
 			all_cards[all_clicked_cards_id[1]].setAttribute('src', 'images/cover.png');
